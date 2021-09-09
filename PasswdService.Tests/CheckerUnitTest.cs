@@ -57,6 +57,13 @@ namespace PasswdService.Tests
         }
 
         [Fact]
+        public void Password_With_Whitespace_Character_Should_Be_Invalid()
+        {
+            Assert.Equal(Checker.Result.InvalidCharacter, Checker.IsValid("Bcd3fgh ijkl+"));
+        }
+        
+
+        [Fact]
         public void Valid_Password()
         {
             // Test all special characters
@@ -73,11 +80,14 @@ namespace PasswdService.Tests
             Assert.Equal(Checker.Result.Valid, Checker.IsValid("Bcd3fghijk-l"));
             Assert.Equal(Checker.Result.Valid, Checker.IsValid("Bcd3fghijkl+"));
 
+            // Test with accented character
+            Assert.Equal(Checker.Result.Valid, Checker.IsValid("AÁbcdef0*"));
+
             Assert.Equal(Checker.Result.Valid, 
                 Checker.IsValid("0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz!@#$%^&*()-+"));
         }
 
-            [Fact]
+        [Fact]
         public void Sample_Passwords_Should_Pass()
         {
             Assert.NotEqual(Checker.Result.Valid, Checker.IsValid("aa"));
